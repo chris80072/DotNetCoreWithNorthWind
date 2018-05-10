@@ -1,7 +1,7 @@
 using DotNetCoreWithNorthWind.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace DotNetCoreWithNorthWind.Context
+namespace DotNetCoreWithNorthWind.Contexts
 {
   public class OrderContext : DbContext
   {

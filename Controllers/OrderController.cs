@@ -1,32 +1,31 @@
+using System.Collections.Generic;
 using System.Linq;
-using DotNetCoreWithNorthWind.Context;
+using DotNetCoreWithNorthWind.Contexts;
 using DotNetCoreWithNorthWind.Models;
+using DotNetCoreWithNorthWind.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 [Route("api/[controller]s")]
 public class OrderController : Controller
 {
-  private readonly OrderContext _orderContext;
+  private readonly IOrderService _orderService;
 
-  public OrderController(OrderContext context)
+  public OrderController(IOrderService orderService)
   {
-    _orderContext = context;
+      _orderService = orderService;
   }
 
   [HttpGet("{id}")]
   public Order Get(int id)
   {
-    // return Content(JsonConvert.SerializeObject(new { isSuccess = true, message = "Hello World" }), "application/json");
-    var result = new Order();
-    result = _orderContext.Orders.Where(o => o.OrderID.Equals(id)).FirstOrDefault();
-    return result;
+    return _orderService.Get(id);
   }
 
   // [HttpGet]
-  // public List<UserModel> Get(string q)
+  // public List<Order> Get()
   // {
-  //   // ...
+  //   return _orderContext.Orders.ToList();
   // }
 
   // [HttpGet("{id}")]

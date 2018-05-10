@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DotNetCoreWithNorthWind.Context;
+using DotNetCoreWithNorthWind.Contexts;
+using DotNetCoreWithNorthWind.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -24,10 +25,10 @@ namespace DotNetCoreWithNorthWind
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddMvc();
-      services.AddDbContext<OrderContext>(options =>
-        {
-          options.UseSqlServer(_config.GetConnectionString("DefaultConnection"));
-        });
+      services.AddDbContext<OrderContext>(options =>{ options.UseSqlServer(_config.GetConnectionString("DefaultConnection")); });
+      services.AddDbContext<EmployeeContext>(options =>{ options.UseSqlServer(_config.GetConnectionString("DefaultConnection")); });
+      services.AddDbContext<CustomerContext>(options =>{ options.UseSqlServer(_config.GetConnectionString("DefaultConnection")); });
+      services.AddScoped<IOrderService, OrderService>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,11 +38,6 @@ namespace DotNetCoreWithNorthWind
       {
         app.UseDeveloperExceptionPage();
       }
-
-      // app.Run(async (context) =>
-      // {
-      //     await context.Response.WriteAsync("Hello World!");
-      // });
 
       app.UseStaticFiles();
 
