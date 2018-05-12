@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DotNetCoreWithNorthWind.Contexts;
+using DotNetCoreWithNorthWind.DAL;
 using DotNetCoreWithNorthWind.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,6 +30,9 @@ namespace DotNetCoreWithNorthWind
       services.AddDbContext<EmployeeContext>(options =>{ options.UseSqlServer(_config.GetConnectionString("DefaultConnection")); });
       services.AddDbContext<CustomerContext>(options =>{ options.UseSqlServer(_config.GetConnectionString("DefaultConnection")); });
       services.AddScoped<IOrderService, OrderService>();
+      services.AddScoped<IOrderDAL, OrderDAL>();
+      services.AddScoped<IEmployeeDAL, EmployeeDAL>();
+      services.AddScoped<ICustomerDAL, CustomerDAL>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

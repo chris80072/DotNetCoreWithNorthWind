@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using DotNetCoreWithNorthWind.Contexts;
 using DotNetCoreWithNorthWind.Models;
 using DotNetCoreWithNorthWind.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -17,38 +16,31 @@ public class OrderController : Controller
   }
 
   [HttpGet("{id}")]
-  public Order Get(int id)
+  public ActionResult Get(int id)
   {
-    return _orderService.Get(id);
+    var order = _orderService.Get(id);
+    return Content(JsonConvert.SerializeObject(new { IsSuccess = true, Order = order }), "application/json");
   }
 
-  // [HttpGet]
-  // public List<Order> Get()
-  // {
-  //   return _orderContext.Orders.ToList();
-  // }
+  [HttpPost]
+  public ActionResult Post([FromBody]Order order)
+  {
+    var orderID = _orderService.Create(order);
+    var isSuccess = orderID > 0 ? true : false;
+    return Content(JsonConvert.SerializeObject(new { IsSuccess = isSuccess, OrderID = orderID }), "application/json");
+  }
 
-  // [HttpGet("{id}")]
-  // public UserModel Get(int id)
-  // {
-  //   // ...
-  // }
+  [HttpPut("{id}")]
+  public ActionResult Put([FromBody]Order order)
+  {
+    var isSuccess = _orderService.Update(order);
+    return Content(JsonConvert.SerializeObject(new { IsSuccess = isSuccess }), "application/json");
+  }
 
-  // [HttpPost]
-  // public int Post([FromBody]UserModel user)
-  // {
-  //   // ...
-  // }
-
-  // [HttpPut("{id}")]
-  // public void Put(int id, [FromBody]UserModel user)
-  // {
-  //   // ...
-  // }
-
-  // [HttpDelete("{id}")]
-  // public void Delete(int id)
-  // {
-  //   // ...
-  // }
+  [HttpDelete("{id}")]
+  public ActionResult Delete(int id)
+  {
+    var isSuccess = _orderService.Delete(id);
+    return Content(JsonConvert.SerializeObject(new { IsSuccess = isSuccess }), "application/json");
+  }
 }

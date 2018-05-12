@@ -1,8 +1,8 @@
 using DotNetCoreWithNorthWind.Models;
 
-namespace DotNetCoreWithNorthWind.Services
+namespace DotNetCoreWithNorthWind.DAL
 {
-    public interface IOrderService
+    public interface IOrderDAL
     {
         Order Get(int id);
         int Create(Order order);

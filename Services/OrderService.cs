@@ -1,33 +1,48 @@
 using System.Linq;
-using DotNetCoreWithNorthWind.Contexts;
+using DotNetCoreWithNorthWind.DAL;
 using DotNetCoreWithNorthWind.Models;
 
 namespace DotNetCoreWithNorthWind.Services
 {
     public class OrderService :IOrderService
     {
-        private readonly OrderContext _orderContext;
-        private readonly EmployeeContext _employeeContext;
-        private readonly CustomerContext _customerContext;
+        private readonly IOrderDAL _orderDAL;
+        private readonly ICustomerDAL _customerDAL;
+        private readonly IEmployeeDAL _employeeDAL;
 
-        public OrderService(OrderContext orderContext, EmployeeContext employeeContext, CustomerContext customerContext)
+        public OrderService(IOrderDAL orderDAL, ICustomerDAL customerDAL, IEmployeeDAL employeeDAL)
         {
-            _orderContext = orderContext;
-            _employeeContext = employeeContext;
-            _customerContext = customerContext;
+            _orderDAL = orderDAL;
+            _customerDAL = customerDAL;
+            _employeeDAL = employeeDAL;
         }
 
         public Order Get(int id)
         {
-            var order = new Order();
-            order = _orderContext.Orders.Where(o => o.OrderID.Equals(id)).FirstOrDefault();
+            var order = _orderDAL.Get(id);
+
             if(order != null)
             {
-                order.Customer = _customerContext.Customers.Where(c => c.CustomerID.Equals(order.CustomerID)).FirstOrDefault();
-                order.Employee = _employeeContext.Employees.Where(e => e.EmployeeID.Equals(order.EmployeeID)).FirstOrDefault();
+                order.Customer = _customerDAL.Get(order.CustomerID);
+                order.Employee = _employeeDAL.Get(order.EmployeeID);
             }
             
             return order;
+        }
+
+        public int Create(Order order)
+        {
+            return _orderDAL.Create(order);
+        }
+
+        public bool Update(Order order)
+        {
+            return _orderDAL.Update(order);
+        }
+
+        public bool Delete(int id)
+        {
+            return _orderDAL.Delete(id);
         }
     }
 }
