@@ -1,0 +1,44 @@
+[Get]
+http://localhost:5000/api/orders/10248
+
+[Post]
+http://localhost:5000/api/orders/
+
+{
+    "customerID": "VINET",
+    "employeeID": 5,
+    "orderDate": "1996-07-04T00:00:00",
+    "requiredDate": "1996-08-01T00:00:00",
+    "shippedDate": "1996-07-16T00:00:00",
+    "shipVia": 3,
+    "freight": 32.38,
+    "shipName": "Vins et alcools Chevalier",
+    "shipAddress": "59 rue de l'Abbaye",
+    "shipCity": "Reims",
+    "shipRegion": null,
+    "shipPostalCode": "51100",
+    "shipCountry": "France",
+}
+
+[Put]
+http://localhost:5000/api/orders/11080
+
+{
+	"OrderID": 11080,
+    "customerID": "VINET",
+    "employeeID": 5,
+    "orderDate": "1996-07-05T00:00:00",
+    "requiredDate": "1996-08-01T00:00:00",
+    "shippedDate": "1996-07-16T00:00:00",
+    "shipVia": 3,
+    "freight": 32.38,
+    "shipName": "Vins et alcools Chevalier",
+    "shipAddress": "59 rue de l'Abbaye",
+    "shipCity": "Reims",
+    "shipRegion": null,
+    "shipPostalCode": "51100",
+    "shipCountry": "France",
+}
+
+[Delete]
+http://localhost:5000/api/orders/11080
